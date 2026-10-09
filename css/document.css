@@ -1,0 +1,60 @@
+/* === Protected company document === */
+.pricing-document, .pricing-document * { box-sizing: border-box; margin: 0; padding: 0; }
+.pricing-document { color-scheme: light; width: 210mm; min-width: 210mm; max-width: 210mm; min-height: 297mm; height: max-content; padding: 12mm 15mm; background: oklch(1 0 0); color: oklch(0 0 0); font-family: Calibri, 'Segoe UI', system-ui, sans-serif; font-size: 9pt; line-height: 1.1; position: relative; flex: none; }
+.pricing-document .doc-hidden { display: none !important; }
+.pricing-document .doc-header-code { text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: 400; margin-bottom: 8mm; }
+.pricing-document .doc-title { text-align: center; font-weight: 700; text-decoration: underline; margin-bottom: 6mm; font-size: 11pt; }
+.pricing-document .doc-checkbox { width: 14px; height: 14px; border: 1px solid oklch(0 0 0); display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; }
+.pricing-document .doc-checkbox svg { width: 12px; height: 12px; color: oklch(0 0 0); }
+.pricing-document .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+/* === Company layout measurements === */
+.pricing-document .doc-purchased-row { display:flex; align-items:flex-end; margin-bottom:1.5mm; padding-left:15mm; }
+.pricing-document .doc-alphabet-label { width:8mm; }
+.pricing-document .doc-purchased-product { flex-grow:1; border-bottom:1px solid oklch(0 0 0); padding-left:2mm; min-height:1.1em; }
+.pricing-document .doc-colon { margin:0 2mm; }
+.pricing-document .doc-purchased-quantity { width:20mm; border-bottom:1px solid oklch(0 0 0); padding-left:2mm; min-height:1.1em; }
+.pricing-document .doc-purchased-price { width:30mm; border-bottom:1px solid oklch(0 0 0); padding-left:2mm; min-height:1.1em; }
+.pricing-document .doc-row-bottom-small { display:flex; align-items:flex-end; margin-bottom:1.5mm; }
+.pricing-document .doc-label-30 { width:30mm; flex-shrink:0; white-space:nowrap; }
+.pricing-document .doc-ruled-value { flex-grow:1; border-bottom:1px solid oklch(0 0 0); min-height:1.1em; padding-left:2mm; }
+.pricing-document .doc-spacer-small { height:1.1em; margin-bottom:1.5mm; }
+.pricing-document .doc-row-center-small { display:flex; align-items:center; margin-bottom:1.5mm; }
+.pricing-document .doc-choices-inset { flex-grow:1; display:flex; align-items:center; padding-left:2mm; }
+.pricing-document .doc-choice-wide { margin:0 10mm 0 2mm; }
+.pricing-document .doc-inset-2 { margin-left:2mm; }
+.pricing-document .doc-row-small { display:flex; margin-bottom:1.5mm; }
+.pricing-document .doc-label-45 { width:45mm; flex-shrink:0; white-space:nowrap; }
+.pricing-document .doc-content-inset { flex-grow:1; padding-left:2mm; }
+.pricing-document .doc-relationship-new { display:flex; align-items:center; margin-bottom:1mm; }
+.pricing-document .doc-row-center { display:flex; align-items:center; }
+.pricing-document .doc-purchased-heading { margin:2mm 0 2mm 10mm; white-space:nowrap; }
+.pricing-document .doc-products-row { display:flex; margin-top:3mm; margin-bottom:2.5mm; }
+.pricing-document .doc-grow { flex-grow:1; }
+.pricing-document .doc-row-medium { display:flex; margin-bottom:2.5mm; }
+.pricing-document .doc-text-30 { width:30mm; white-space:nowrap; }
+.pricing-document .doc-ruled-blank { flex-grow:1; border-bottom:1px solid oklch(0 0 0); min-height:1.1em; }
+.pricing-document .doc-choice-narrow { margin:0 4mm 0 1mm; }
+.pricing-document .doc-inset-1 { margin-left:1mm; }
+.pricing-document .doc-row-center-medium { display:flex; align-items:center; margin-bottom:2.5mm; }
+.pricing-document .doc-text-20 { width:20mm; white-space:nowrap; }
+.pricing-document .doc-row-bottom { display:flex; align-items:flex-end; }
+.pricing-document .doc-row-bottom-medium { display:flex; align-items:flex-end; margin-bottom:2.5mm; }
+.pricing-document .doc-text-25 { width:25mm; white-space:nowrap; }
+.pricing-document .doc-approval-section { margin-top:5mm; border-top:1px dashed oklch(0 0 0); padding-top:5mm; font-size:8.5pt; }
+.pricing-document .doc-approval-heading { font-weight:700; font-style:italic; white-space:nowrap; }
+.pricing-document .doc-approval-instruction { text-decoration:underline; margin-bottom:4mm; white-space:nowrap; }
+.pricing-document .doc-row-bottom-short { display:flex; align-items:flex-end; margin-bottom:2mm; }
+.pricing-document .doc-label-20 { width:20mm; flex-shrink:0; white-space:nowrap; }
+.pricing-document .doc-blank-value { flex-grow:1; min-height:1.1em; }
+.pricing-document .doc-row-bottom-large { display:flex; align-items:flex-end; margin-bottom:4mm; }
+.pricing-document .doc-row-center-short { display:flex; align-items:center; margin-bottom:2mm; }
+.pricing-document .doc-price-blank { width:40mm; border-bottom:1px solid oklch(0 0 0); min-height:1.1em; }
+.pricing-document .doc-row-center-large { display:flex; align-items:center; margin-bottom:4mm; }
+.pricing-document .doc-remarks-heading { margin-bottom:1mm; white-space:nowrap; }
+.pricing-document .doc-remarks-space { height:1.1em; margin-bottom:2mm; }
+.pricing-document .doc-remarks-line { border-bottom:1px solid oklch(0 0 0); min-height:1.1em; margin-bottom:2mm; }
+.pricing-document .doc-remarks-line-last { border-bottom:1px solid oklch(0 0 0); min-height:1.1em; margin-bottom:6mm; }
+.pricing-document .doc-approval-signature { display:flex; justify-content:flex-end; }
+.pricing-document .doc-align-center { text-align:center; }
+.pricing-document .doc-signature-line { width:25mm; border-bottom:1px solid oklch(0 0 0); margin:0 auto; }

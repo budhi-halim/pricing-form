@@ -1,1 +1,185 @@
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById("btn-reset").innerHTML=ICONS.reset,document.getElementById("btn-back").innerHTML=ICONS.back,document.getElementById("btn-home").innerHTML=ICONS.home,document.querySelectorAll(".btn-icon").forEach(e=>e.innerHTML=ICONS.plus);let e=document.getElementById("form-view"),i=document.getElementById("preview-view"),t=document.getElementById("pricing-form");t.setAttribute("novalidate",!0);let d=document.createElement("div");d.className="toast-notification",document.body.appendChild(d);let m;function s(e){d.textContent=e,d.classList.add("show"),clearTimeout(m),m=setTimeout(()=>{d.classList.remove("show")},3e3)}function l(){let e=document.querySelector('input[name="business_relationship"]:checked')?.value,i=document.getElementById("payment-info-group"),t=document.getElementById("purchased-items-group");"Old Customer"===e?(i.classList.remove("hidden"),t.classList.remove("hidden")):"New Customer"===e?(i.classList.add("hidden"),t.classList.add("hidden"),document.querySelectorAll('input[name="payment_info"]').forEach(e=>e.checked=!1)):(i.classList.add("hidden"),t.classList.add("hidden"))}function a(){AppState.purchasedItems.forEach(e=>{let i=document.getElementById(`pi_prod_${e.id}`),t=document.getElementById(`pi_qty_${e.id}`),d=document.getElementById(`pi_price_${e.id}`);i&&(e.prod=i.value),t&&(e.qty=t.value),d&&(e.price=d.value)}),AppState.productNames.forEach(e=>{let i=document.getElementById(`pn_name_${e.id}`);i&&(e.name=i.value)})}function n(){let e=document.getElementById("purchased-items-container");e.innerHTML="",AppState.purchasedItems.forEach(i=>{let t=document.createElement("div");t.className="subform-row",t.innerHTML=`<input type="text" id="pi_prod_${i.id}" placeholder="Product Name"> <input type="number" step="any" id="pi_qty_${i.id}" placeholder="Qty (kg)"> <input type="number" step="any" id="pi_price_${i.id}" placeholder="Price ($)"><button type="button" class="icon-btn destructive pi-rem" data-id="${i.id}">${ICONS.close}</button>`,e.appendChild(t),document.getElementById(`pi_prod_${i.id}`).value=i.prod||"",document.getElementById(`pi_qty_${i.id}`).value=i.qty||"",document.getElementById(`pi_price_${i.id}`).value=i.price||""});let i=document.getElementById("btn-add-purchased");AppState.purchasedItems.length<3?i.classList.remove("hidden"):i.classList.add("hidden"),document.querySelectorAll(".pi-rem").forEach(e=>e.addEventListener("click",e=>{a();let i=parseInt(e.currentTarget.dataset.id);AppState.purchasedItems=AppState.purchasedItems.filter(e=>e.id!==i),n()}))}function r(){let e=document.getElementById("product-names-container");e.innerHTML="",AppState.productNames.forEach((i,t)=>{let d=document.createElement("div");d.className="subform-row",d.innerHTML=`<input type="text" id="pn_name_${i.id}" placeholder="Enter product name"> ${t>0?`<button type="button" class="icon-btn destructive pn-rem" data-id="${i.id}">${ICONS.close}</button>`:'<div style="width:48px"></div>'}`,e.appendChild(d),document.getElementById(`pn_name_${i.id}`).value=i.name||""}),document.querySelectorAll(".pn-rem").forEach(e=>e.addEventListener("click",e=>{a();let i=parseInt(e.currentTarget.dataset.id);AppState.productNames=AppState.productNames.filter(e=>e.id!==i),r()}))}function o(){AppState.purchasedItems=[{id:1,prod:"",qty:"",price:""}],AppState.productNames=[{id:1,name:""}],n(),r()}function v(t){e.classList.add("hidden"),i.classList.add("hidden"),t.classList.remove("hidden"),window.scrollTo(0,0)}function p(){let e=document.getElementById("a4-document"),i=AppState.formData,t=e=>`<div class="doc-checkbox">${e?ICONS.checkmark:""}</div>`,d=(e,i)=>t(e===i),m="New Customer"===i.business_relationship,s="";if(m)s=[0,1,2].map((e,i)=>`<div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm;padding-left:15mm"><div style="width:8mm">${["A","B","C"][i]}.</div><div style="flex-grow:1;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em"></div><div style="margin:0 2mm">;</div><div style="width:20mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em"></div><div style="margin:0 2mm">KG ; US$</div><div style="width:30mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em"></div></div>`).join("");else{let l=[...AppState.purchasedItems];for(;l.length<3;)l.push({prod:"",qty:"",price:""});s=l.map((e,i)=>`<div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm;padding-left:15mm"><div style="width:8mm">${["A","B","C"][i]}.</div><div style="flex-grow:1;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${e.prod}</div><div style="margin:0 2mm">;</div><div style="width:20mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${e.qty}</div><div style="margin:0 2mm">KG ; US$</div><div style="width:30mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${e.price}</div></div>`).join("")}let a=[...AppState.productNames];for(;a.length<3;)a.push({name:""});let n=a.map((e,i)=>`<div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:8mm">${getAlphabetIndex(i)}.</div><div style="flex-grow:1;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${e.name}</div></div>`).join("");e.innerHTML=`<div class="doc-header-code">FRM-MKT-0201</div><div class="doc-title">CUSTOMER'S INFORMATION for PRICING</div><div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">1. Name of Customer</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.customer_name}</div></div><div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">2. Person in Charge</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.person_in_charge}</div></div><div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">3. Line Business</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.line_business}</div></div><div class="avoid-break" style="height:1.1em;margin-bottom:1.5mm"></div><div class="avoid-break" style="display:flex;align-items:center;margin-bottom:1.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">4. Business Scale</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;display:flex;align-items:center;padding-left:2mm">${d(i.business_scale,"National / International")}<span style="margin:0 10mm 0 2mm">National / International</span>${d(i.business_scale,"Lokal")}<span style="margin-left:2mm">Lokal</span></div></div><div class="avoid-break" style="display:flex;margin-bottom:1.5mm"><div style="width:45mm;flex-shrink:0;white-space:nowrap">5. Business Relationship with us</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;padding-left:2mm"><div style="display:flex;align-items:center;margin-bottom:1mm">- New Customer<div style="margin-left:2mm">${d(i.business_relationship,"New Customer")}</div></div><div style="display:flex;align-items:center">- Old Customer<div style="margin-left:2mm">${d(i.business_relationship,"Old Customer")}</div></div></div></div><div class="avoid-break" style="margin:2mm 0 2mm 10mm;white-space:nowrap">* Purchased Item : Quantity & Price</div>${s}<div class="avoid-break" style="display:flex;margin-top:3mm;margin-bottom:2.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">Name of Product</div><div style="margin:0 2mm">:</div><div style="flex-grow:1">${n}</div></div><div class="avoid-break" style="display:flex;margin-bottom:2.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">6. Payment Info</div><div style="margin:0 2mm">:</div><div style="flex-grow:1"><div style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:30mm;white-space:nowrap">New Customer</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em"></div></div><div style="display:flex;align-items:center" class="${m?"hidden":""}"><div style="width:30mm;white-space:nowrap">Old Customer</div><div style="margin:0 2mm">:</div>${d(i.payment_info,"Good")}<span style="margin:0 4mm 0 1mm">Good</span>${d(i.payment_info,"Fair")}<span style="margin:0 4mm 0 1mm">Fair</span>${d(i.payment_info,"Poor")}<span style="margin:0 4mm 0 1mm">Poor</span>${d(i.payment_info,"Bad")}<span style="margin-left:1mm">Bad</span></div></div></div><div class="avoid-break" style="display:flex;align-items:center;margin-bottom:2.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">7. Deal System</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;display:flex;align-items:center;padding-left:2mm">S/C<span style="margin:0 10mm 0 2mm">${d(i.deal_system,"S/C")}</span>NOTA PESAN<span style="margin:0 10mm 0 2mm">${d(i.deal_system,"NOTA PESAN")}</span>NIHIL<span style="margin-left:2mm">${d(i.deal_system,"NIHIL")}</span></div></div><div class="avoid-break" style="display:flex;margin-bottom:2.5mm"><div style="width:30mm;flex-shrink:0;white-space:nowrap">8. Ideal Price from</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;padding-left:2mm"><div style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:20mm;white-space:nowrap">Customer</div>${d(i.ideal_price_from,"Customer")}<span style="margin:0 2mm">US$</span><div style="width:30mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${"Customer"===i.ideal_price_from?i.ideal_price_val:""}</div></div><div style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:20mm;white-space:nowrap">Sales</div>${d(i.ideal_price_from,"Sales")}<span style="margin:0 2mm">US$</span><div style="width:30mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${"Sales"===i.ideal_price_from?i.ideal_price_val:""}</div></div><div style="display:flex;align-items:flex-end"><div style="width:20mm;white-space:nowrap">Marketing</div>${d(i.ideal_price_from,"Marketing")}<span style="margin:0 2mm">US$</span><div style="width:30mm;border-bottom:1px solid #000;padding-left:2mm;min-height:1.1em">${"Marketing"===i.ideal_price_from?i.ideal_price_val:""}</div></div></div></div><div class="avoid-break" style="display:flex;align-items:flex-end;margin-bottom:2.5mm"><div style="width:45mm;flex-shrink:0;white-space:nowrap">9. Competitor Price</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.competitor_price}</div></div><div class="avoid-break" style="display:flex;margin-bottom:2.5mm"><div style="width:45mm;flex-shrink:0;white-space:nowrap">10. Quantity Order Estimation</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;padding-left:2mm"><div style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:25mm;white-space:nowrap">a. First Order</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.qty_first} kg</div></div><div style="display:flex;align-items:flex-end;margin-bottom:1.5mm"><div style="width:25mm;white-space:nowrap">b. Average</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.qty_avg} kg</div></div><div style="display:flex;align-items:flex-end"><div style="width:25mm;white-space:nowrap">c. Maximum</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;border-bottom:1px solid #000;min-height:1.1em;padding-left:2mm">${i.qty_max} kg</div></div></div></div><div class="avoid-break" style="margin-top:5mm;border-top:1px dashed #000;padding-top:5mm;font-size:8.5pt"><div style="font-weight:700;font-style:italic;white-space:nowrap">For Pak Poni use only</div><div style="text-decoration:underline;margin-bottom:4mm;white-space:nowrap">To: Marketing, please quote as below :</div><div style="display:flex;align-items:flex-end;margin-bottom:2mm"><div style="width:20mm;flex-shrink:0;white-space:nowrap">Product Name</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;min-height:1.1em"></div></div><div style="display:flex;align-items:flex-end;margin-bottom:4mm"><div style="width:20mm;flex-shrink:0;white-space:nowrap">Customer</div><div style="margin:0 2mm">:</div><div style="flex-grow:1;min-height:1.1em"></div></div><div style="display:flex;align-items:center;margin-bottom:2mm">A.<div style="margin:0 2mm">${t(!1)}</div><span style="width:20mm;white-space:nowrap">Best Price</span><span style="margin:0 2mm">US$</span><div style="width:40mm;border-bottom:1px solid #000;min-height:1.1em"></div></div><div style="display:flex;align-items:center;margin-bottom:2mm">B.<div style="margin:0 2mm">${t(!1)}</div></div><div style="display:flex;align-items:center;margin-bottom:4mm">C.<div style="margin:0 2mm">${t(!1)}</div></div><div style="margin-bottom:1mm;white-space:nowrap">Remarks :</div><div style="height:1.1em;margin-bottom:2mm"></div><div style="border-bottom:1px solid #000;min-height:1.1em;margin-bottom:2mm"></div><div style="border-bottom:1px solid #000;min-height:1.1em;margin-bottom:6mm"></div><div style="display:flex;justify-content:flex-end"><div style="text-align:center">Approved by,<br><br><br><br><br><div style="width:25mm;border-bottom:1px solid #000;margin:0 auto"></div></div></div></div>`}function y(){let e=document.querySelector(".a4-wrapper"),i=document.getElementById("a4-document");if(!e||!i)return;let t=e.clientWidth-48,d=t<793.70078739?t/793.70078739:1;i.style.transform=`scale(${d})`;let m=i.offsetHeight;e.style.height=`${m*d+48}px`}document.getElementById("btn-reset").addEventListener("click",()=>{t.reset(),o(),l()}),document.getElementById("btn-home").addEventListener("click",()=>{t.reset(),o(),l(),v(e)}),document.getElementById("btn-back").addEventListener("click",()=>{v(e)}),document.getElementById("btn-print").addEventListener("click",()=>{let e=AppState.formData.customer_name||"Unknown",i=getCurrentDateString(),t=document.title;document.title=`Pricing ${e} (current ${i})`,setTimeout(()=>{window.print(),setTimeout(()=>{document.title=t},1e3)},100)}),document.querySelectorAll('input[name="business_relationship"]').forEach(e=>{e.addEventListener("change",l)}),t.addEventListener("submit",e=>{e.preventDefault();let t=[{id:"customer_name",label:"Name of Customer"},{id:"person_in_charge",label:"Person in Charge"},{id:"line_business",label:"Line Business"}];for(let d of t)if(!document.getElementById(d.id).value.trim())return s(`${d.label} is required.`);if(!document.querySelector('input[name="business_scale"]:checked'))return s("Please select a Business Scale.");let m=document.querySelector('input[name="business_relationship"]:checked');if(!m)return s("Please select a Business Relationship.");if("Old Customer"===m.value&&!document.querySelector('input[name="payment_info"]:checked'))return s("Payment Info is required for Old Customers.");if(a(),"Old Customer"===m.value){let l=!0;if(AppState.purchasedItems.forEach(e=>{let i=(e.prod?1:0)+(e.qty?1:0)+(e.price?1:0);if(i>0&&i<3)return l=!1,s("Purchased Items: Must fill Product, Qty, and Price if row is used.")}),!l)return}let n=!0;if(AppState.productNames.forEach(e=>{if(!e.name.trim())return n=!1,s("Name of Product fields cannot be empty.")}),n){if(!document.querySelector('input[name="deal_system"]:checked'))return s("Please select a Deal System.");if(!document.querySelector('input[name="ideal_price_from"]:checked'))return s("Please select Ideal Price from (Customer/Sales/Marketing).");if(!document.getElementById("ideal_price_val").value.trim())return s("Ideal Price value is required.");if(!document.getElementById("qty_first").value.trim())return s("First Order estimation is required.");if(!document.getElementById("qty_avg").value.trim())return s("Average estimation is required.");if(!document.getElementById("qty_max").value.trim())return s("Maximum estimation is required.");processForm(),p(),v(i),y()}}),document.getElementById("btn-add-purchased").addEventListener("click",()=>{a(),AppState.purchasedItems.length<3&&(AppState.purchasedItems.push({id:Date.now(),prod:"",qty:"",price:""}),n())}),document.getElementById("btn-add-product").addEventListener("click",()=>{a(),AppState.productNames.push({id:Date.now(),name:""}),r()}),window.addEventListener("resize",()=>{i.classList.contains("hidden")||y()}),o(),l()});
+import { initializeTheme } from '../assets/family/js/theme.js';
+import { createNotifications } from '../assets/family/js/notifications.js';
+import { icon } from '../assets/family/js/icons.js';
+import { FIELD_NAMES, createState, addRow, removeRow, validateForm } from './logic.js';
+import { renderDocument } from './document.js';
+import { createPreview } from './preview.js';
+import { createPrintController } from './printing.js';
+
+const form = document.querySelector('#pricing-form');
+const formView = document.querySelector('#form-view');
+const previewView = document.querySelector('#preview-view');
+const documentElement = document.querySelector('#a4-document');
+const summary = document.querySelector('#validation-summary');
+const notifications = createNotifications(document.querySelector('#notifications'));
+initializeTheme({ toggle: document.querySelector('#theme-toggle') });
+document.querySelectorAll('[data-icon]').forEach(element => { element.innerHTML = icon(element.dataset.icon); });
+let state = createState();
+let model = null;
+const preview = createPreview({ viewport: document.querySelector('#preview-viewport'), spacer: document.querySelector('#preview-size'), sheet: document.querySelector('#preview-sheet'), documentElement, zoom: document.querySelector('#preview-zoom'), label: document.querySelector('#zoom-value') });
+const printing = createPrintController({ button: document.querySelector('#print-document'), preview, getModel: () => model, notify: notifications.show });
+
+function readForm() {
+  const fields = {};
+  for (const [key, name] of Object.entries(FIELD_NAMES)) fields[key] = form.elements.namedItem(name)?.value || '';
+  const products = [...document.querySelectorAll('[data-product-row]')].map(row => ({ id: Number(row.dataset.productRow), name: row.querySelector('input').value }));
+  const purchasedItems = [...document.querySelectorAll('[data-purchased-row]')].map(row => ({ id: Number(row.dataset.purchasedRow), ...Object.fromEntries([...row.querySelectorAll('input')].map(input => [input.dataset.column, input.value])) }));
+  state = { ...state, fields, products, purchasedItems };
+}
+
+function createInput({ label, value, id, type = 'text', column }) {
+  const wrapper = document.createElement('label');
+  wrapper.textContent = label;
+  const input = document.createElement('input');
+  input.type = type;
+  input.id = id;
+  input.name = id;
+  input.value = value;
+  if (type === 'number') input.step = 'any';
+  if (column) input.dataset.column = column;
+  wrapper.append(input);
+  return wrapper;
+}
+
+function removeButton(type, id, index) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'isi-button isi-button--icon isi-button--danger';
+  button.innerHTML = icon('close');
+  button.setAttribute('aria-label', `Remove ${type === 'products' ? 'product' : 'purchased item'} ${index + 1}`);
+  button.addEventListener('click', () => {
+    readForm();
+    state = removeRow(state, type, id);
+    clearErrors();
+    renderRows(type);
+    document.querySelector(type === 'products' ? '#add-product' : '#add-purchased').focus();
+  });
+  return button;
+}
+
+function renderRows(type) {
+  const container = document.querySelector(type === 'products' ? '#product-names' : '#purchased-items');
+  container.replaceChildren();
+  state[type].forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = type === 'products' ? 'product-row' : 'purchased-row';
+    row.dataset.field = `${type === 'products' ? 'product' : 'purchased'}-${item.id}`;
+    if (type === 'products') {
+      row.dataset.productRow = item.id;
+      row.append(createInput({ label: `Name of Product ${index + 1}`, value: item.name, id: `product-${item.id}` }));
+      row.querySelector('input').required = true;
+      if (index > 0) row.append(removeButton(type, item.id, index));
+    } else {
+      row.dataset.purchasedRow = item.id;
+      for (const [column, label, inputType] of [['product', 'Product Name', 'text'], ['quantity', 'Qty (kg)', 'number'], ['price', 'Price (US$)', 'number']]) row.append(createInput({ label, value: item[column], id: `purchased-${item.id}-${column}`, type: inputType, column }));
+      row.append(removeButton(type, item.id, index));
+    }
+    container.append(row);
+  });
+  document.querySelector('#add-purchased').hidden = state.purchasedItems.length >= 3;
+}
+
+function customerChanged() {
+  const relationship = form.elements.namedItem('business-relationship').value;
+  const oldCustomer = relationship === 'Old Customer';
+  document.querySelector('#customer-history').hidden = !oldCustomer;
+  document.querySelectorAll('[name="payment-info"]').forEach(input => {
+    input.required = oldCustomer;
+    if (!oldCustomer) input.checked = false;
+  });
+}
+
+function clearErrors() {
+  form.querySelectorAll('.isi-field-error').forEach(element => element.remove());
+  form.querySelectorAll('[aria-invalid]').forEach(element => { element.removeAttribute('aria-invalid'); element.removeAttribute('aria-describedby'); });
+  summary.hidden = true;
+  summary.textContent = '';
+}
+
+function displayErrors(errors) {
+  clearErrors();
+  let firstInput = null;
+  errors.forEach((error, index) => {
+    const field = document.getElementById(FIELD_NAMES[error.key]);
+    const group = form.querySelector(`[data-field="${error.key}"]`);
+    const wrapper = field?.parentElement || group;
+    if (!wrapper) return;
+    const message = document.createElement('p');
+    message.className = 'isi-field-error';
+    message.id = `validation-${index}`;
+    message.textContent = error.message;
+    wrapper.append(message);
+    const controls = field ? [field] : [...wrapper.querySelectorAll('input')];
+    controls.forEach(input => { input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', message.id); });
+    firstInput ||= controls[0];
+  });
+  summary.textContent = `${errors.length === 1 ? 'One field needs' : `${errors.length} fields need`} attention. ${errors[0].message}`;
+  summary.hidden = false;
+  notifications.show('Please check the highlighted fields.', { key: 'validation', tone: 'error' });
+  firstInput?.focus();
+}
+
+function showForm() {
+  printing.cancel();
+  model = null;
+  document.documentElement.removeAttribute('data-document-ready');
+  preview.hide();
+  previewView.hidden = true;
+  formView.hidden = false;
+  document.querySelector('.isi-skip-link').href = '#form-view';
+  document.querySelector('#generate-document').focus({ preventScroll: true });
+  window.scrollTo(0, 0);
+}
+
+function resetForm() {
+  printing.cancel();
+  form.reset();
+  state = createState();
+  model = null;
+  documentElement.replaceChildren();
+  renderRows('products');
+  renderRows('purchasedItems');
+  clearErrors();
+  customerChanged();
+  preview.reset();
+  showForm();
+  document.querySelector('#customer-name').focus({ preventScroll: true });
+  notifications.clear();
+  notifications.show('Form reset.');
+}
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  if (formView.hidden) return;
+  readForm();
+  const result = validateForm(state);
+  if (result.errors.length) { displayErrors(result.errors); return; }
+  clearErrors();
+  model = result.model;
+  notifications.clear();
+  documentElement.innerHTML = renderDocument(model);
+  document.documentElement.dataset.documentReady = 'true';
+  formView.hidden = true;
+  previewView.hidden = false;
+  document.querySelector('.isi-skip-link').href = '#preview-viewport';
+  preview.reset();
+  preview.show();
+  document.querySelector('#back-to-form').focus({ preventScroll: true });
+  window.scrollTo(0, 0);
+});
+for (const [id, type] of [['add-product', 'products'], ['add-purchased', 'purchasedItems']]) document.getElementById(id).addEventListener('click', () => {
+  readForm();
+  state = addRow(state, type);
+  clearErrors();
+  renderRows(type);
+  const target = type === 'products' ? '#product-names' : '#purchased-items';
+  document.querySelector(`${target} > :last-child input`)?.focus();
+});
+document.querySelectorAll('[name="business-relationship"]').forEach(input => input.addEventListener('change', () => { customerChanged(); clearErrors(); }));
+document.querySelector('#reset-form').addEventListener('click', resetForm);
+document.querySelector('#new-form').addEventListener('click', resetForm);
+document.querySelector('#back-to-form').addEventListener('click', showForm);
+window.addEventListener('pagehide', () => { printing.cancel(); notifications.clear(); });
+renderRows('products');
+renderRows('purchasedItems');
+customerChanged();
